@@ -1,5 +1,25 @@
+import { useState } from "react";
 import { NavLink } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { login } from "../features/userSlice";
 export default function Login() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  console.log(username);
+  console.log(password);
+
+  const dispatch = useDispatch();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(
+      login({
+        username: username,
+        password: password,
+        loggedin: true,
+      })
+    );
+  };
   return (
     <div
       style={{
@@ -13,7 +33,11 @@ export default function Login() {
           <h3>We help you to get your question papers!</h3>
         </div>
         <div class="col-md-6 my-auto">
-          <form action="" class="border p-2 rounded shadow-lg">
+          <form
+            action=""
+            class="border p-2 rounded shadow-lg"
+            onSubmit={(e) => handleSubmit(e)}
+          >
             <div class="row gy-3 mb-1">
               <h2 class="text-center">Sign in</h2>
             </div>
@@ -25,6 +49,8 @@ export default function Login() {
                   id="vitmail"
                   placeholder="enter your vit email"
                   class="form-control"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
                   required
                 />
               </div>
@@ -36,17 +62,17 @@ export default function Login() {
                   type="password"
                   id="password"
                   class="form-control"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   required
                 />
               </div>
             </div>
             <div class="row gy-3 mb-3">
               <div class="col-md-12">
-                <NavLink className="nav-link" to="/home">
-                  <button type="button" class="btn btn-primary w-100">
-                    Log in
-                  </button>
-                </NavLink>
+                <button type="submit" class="btn btn-primary w-100">
+                  Log in
+                </button>
               </div>
             </div>
             <div class="row gy-3 mb-3">
